@@ -46,15 +46,13 @@ addpath(scrpth) % Needed for parfor version of spm_dcm_peb_fit and spm_fmri_conc
 % runs = spm_BIDS(BIDS,'runs', 'modality','func', 'type','bold', 'task','facerecognition'); 
 
 % ...else just re-specify
-subs = {};
-for s = [1:9 11:16]    % subject 10 had fewer scans in last run
-    subs{end+1} = sprintf('%02d',s);
-end
+subs = {}; for s = [1:9 11:16]; subs{end+1} = sprintf('%02d',s); end % subject 10 had fewer scans in last run
 nsub   = numel(subs)
 subdir = cellfun(@(s) ['sub-' s], subs, 'UniformOutput',false);
 
-runs = [1:9];
-nrun = numel(runs);
+runs = {}; for r = [1:9]; runs{end+1} = sprintf('%02d',r); end
+nrun = numel(runs)
+
 
 nscan = repmat(208,1,nrun); % sub-15, run-01 has 209 scans, so ignore last
 TR = 2;
