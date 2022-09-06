@@ -45,15 +45,15 @@ addpath(scrpth) % Needed for parfor version of spm_dcm_peb_fit and spm_fmri_conc
 % subs   = spm_BIDS(BIDS,'subjects', 'task','facerecognition');
 % runs = spm_BIDS(BIDS,'runs', 'modality','func', 'type','bold', 'task','facerecognition'); 
 
-matched_subs = {};
-for s = [1:9 11:16]; % sub-10 only has 170 volumes in last run so cannot be combined in GCM below
-    matched_subs{end+1} = subs{s};
+% ...else just re-specify
+subs = {};
+for s = [1:9 11:16]    % subject 10 had fewer scans in last run
+    subs{end+1} = sprintf('%02d',s);
 end
-subs = matched_subs;
 nsub   = numel(subs)
 subdir = cellfun(@(s) ['sub-' s], subs, 'UniformOutput',false);
 
-runs = 1:9
+runs = [1:9];
 nrun = numel(runs);
 
 nscan = repmat(208,1,nrun); % sub-15, run-01 has 209 scans, so ignore last
